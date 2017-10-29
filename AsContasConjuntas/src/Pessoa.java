@@ -13,6 +13,8 @@ public class Pessoa {
 		distancia = -1;
 	}
 	
-	
+	public void addConjunta(String nome) {
+		conjuntas.add(nome);
+	}
 	
 }
