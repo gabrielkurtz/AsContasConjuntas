@@ -102,7 +102,6 @@ public class AsContasConjuntas {
 		Pessoa pessoa2 = pessoas.get(nome2);
 		
 		pessoa2.distancia = 1;
-//		pessoa2.anterior = pessoa2.nome;
 		
 		fila.add(pessoa2);
 		
