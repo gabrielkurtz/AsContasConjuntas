@@ -4,6 +4,8 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -33,6 +35,7 @@ public class AsContasConjuntas {
 
 		HashSet<Conta> contas = new HashSet<Conta>();
 		HashMap<String, Pessoa> pessoas = new HashMap<String, Pessoa>();
+		ArrayDeque<Pessoa> fila = new ArrayDeque<Pessoa>();
 		String nome1="", nome2="";
 		
 		
@@ -94,7 +97,35 @@ public class AsContasConjuntas {
 				+ "\nPessoas:" + pessoas.size() + "   ---   Contas: " + contas.size()
 				+ "\nOrigem: " + nome1 + "   ---   Destino: " + nome2);
 
+		Pessoa pessoa1 = pessoas.get(nome1);
+		Pessoa pessoa2 = pessoas.get(nome2);
 		
+		pessoa2.distancia = 1;
+		pessoa2.anterior = pessoa2.nome;
+		
+		fila.add(pessoa2);
+		
+		int count = 0;
+		while(!fila.isEmpty()) {
+			Pessoa p = fila.remove();
+
+			for(String v : p.conjuntas) {
+				Pessoa vizinho = pessoas.get(v);
+				if(vizinho.distancia<0) {
+					vizinho.distancia = p.distancia + 1;
+					vizinho.anterior = p.nome;
+					fila.add(vizinho);
+				}
+			}
+			count++;
+		}
+		
+		System.out.println(count);
+		
+		Pessoa ant = pessoas.get(pessoa1.anterior);
+		for(Conta c : contas) {
+
+		}
 		
 		long endTime = System.nanoTime();
 		double duration = ((endTime*1.0 - startTime)/1000000000);
@@ -103,3 +134,14 @@ public class AsContasConjuntas {
 		
 	}
 }
+	
+/*	public boolean processaVizinhos(Pessoa p) {
+		boolean ret = false;
+		for(String vizinho : p.conjuntas) {
+			pessoas.get(vizinho).distancia = p.distancia + 1;
+			pessoas.get(vizinho).anterior = p.nome;
+		}
+		return ret;
+	}
+	*/	
+
