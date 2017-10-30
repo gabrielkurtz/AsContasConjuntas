@@ -93,19 +93,20 @@ public class AsContasConjuntas {
 			}
 		}
 		
-		System.out.println("\n--- Inicializando Estrutura de Contas para arquivo " + arquivo + " ---"
-				+ "\nPessoas:" + pessoas.size() + "   ---   Contas: " + contas.size()
-				+ "\nOrigem: " + nome1 + "   ---   Destino: " + nome2);
+		System.out.println("--- Inicializando Estrutura de Contas para arquivo " + arquivo + " ---"
+				+ "\nPessoas: " + pessoas.size() + "   ---   Contas: " + contas.size()
+				+ "\nOrigem: " + nome1 + "   ---   Destino: " + nome2
+				+ "\n------------------------------------------");
 
 		Pessoa pessoa1 = pessoas.get(nome1);
 		Pessoa pessoa2 = pessoas.get(nome2);
 		
 		pessoa2.distancia = 1;
-		pessoa2.anterior = pessoa2.nome;
+//		pessoa2.anterior = pessoa2.nome;
 		
 		fila.add(pessoa2);
 		
-		int count = 0;
+		lacoCaminha:
 		while(!fila.isEmpty()) {
 			Pessoa p = fila.remove();
 
@@ -115,16 +116,23 @@ public class AsContasConjuntas {
 					vizinho.distancia = p.distancia + 1;
 					vizinho.anterior = p.nome;
 					fila.add(vizinho);
+					if(vizinho == pessoa1) break lacoCaminha;
 				}
 			}
-			count++;
 		}
 		
-		System.out.println(count);
-		
-		Pessoa ant = pessoas.get(pessoa1.anterior);
-		for(Conta c : contas) {
-
+		Pessoa aux1 = pessoa1;
+		Pessoa aux2 = pessoas.get(pessoa1.anterior);
+		while(aux1 != pessoa2) {
+			lacoConta:
+			for(Conta c : contas) {
+				if(c.titulares.contains(aux1.nome) && c.titulares.contains(aux2.nome)) {
+					System.out.println(c.numero + " - " + aux1.nome + " - " + aux2.nome);
+					aux1 = aux2;
+					aux2 = pessoas.get(aux1.anterior);
+					break lacoConta;
+				}
+			}
 		}
 		
 		long endTime = System.nanoTime();

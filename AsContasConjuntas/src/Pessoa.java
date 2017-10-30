@@ -9,8 +9,9 @@ public class Pessoa {
 	
 	public Pessoa(String nome) {
 		this.nome = nome;
-		conjuntas = new HashSet<String>();
-		distancia = -1;
+		this.conjuntas = new HashSet<String>();
+		this.anterior = "";
+		this.distancia = -1;
 	}
 	
 	public void addConjunta(String nome) {
