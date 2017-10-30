@@ -142,14 +142,3 @@ public class AsContasConjuntas {
 		
 	}
 }
-	
-/*	public boolean processaVizinhos(Pessoa p) {
-		boolean ret = false;
-		for(String vizinho : p.conjuntas) {
-			pessoas.get(vizinho).distancia = p.distancia + 1;
-			pessoas.get(vizinho).anterior = p.nome;
-		}
-		return ret;
-	}
-	*/	
-
